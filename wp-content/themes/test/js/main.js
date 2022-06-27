@@ -1,13 +1,10 @@
-$(document).ready( function() {
+$(document).ready(function () {
+    var $container = $('#isocontent');
+    $container.isotope({})
+    $('#filter-select').change(function () {
+        $container.isotope({
+            filter: this.value
+        });
+    });
 
-$('.grid').isotope({
- itemSelector: '.grid-item',
 });
-
-$('.filter-button-group').on( 'click', 'li', function() {
- var filterValue = $(this).attr('data-filter');
- $('.grid').isotope({ filter: filterValue });
-   $('.filter-button-group li').removeClass('active');
-   $(this).addClass('active');
-});
-   });
