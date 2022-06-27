@@ -1,50 +1,48 @@
 <?php get_header(); ?>
-    <section class="container-fluid custom_box">
-      <div class="container">
-        <div class="banner">
-              <div class="container container_filter">
-          <div class="filters filter-button-group">
-          		  <ul><h4>
-          		    <li class="active" data-filter="*">All</li>
+<section class="container-fluid custom_box">
+  <div class="banner">
+    <div class="container container_filter">
 
-                  <?php
-                    $terms = get_terms('tests_category');
-                    foreach ($terms as  $term) { ?>
-                      <li data-filter=".<?php  echo $term->slug; ?>"><?php echo $term->name; ?></li>
-                <?php  }
+      <?php
+      $terms = get_terms('tests_category');
+      $count = count($terms);
+      if ($count > 0) {
+        echo "<select id='filter-select'>";
+        echo "<option value='*' data-filter-value='' class='selected'>All items</option>";
+        foreach ($terms as $term) {
+          echo "<option value='.{$term->slug}'>" . $term->name . "</option>";
+        }
+        echo "</select>";
+      }
+      ?>
 
-                  ?>
-          		  </h4></ul>
-          		</div>
-          		<div class="content grid">
-                <?php
-                    $args = array(
-                      'post_type' => 'tests',
-                      'posts_per_page' => 8
-                    );
+      <div id="isocontent">
+        <?php
+        $args = array(
+          'post_type' => 'tests',
+          'posts_per_page' => 8
+        );
 
-                    $query = new WP_Query($args);
+        $query = new WP_Query($args);
 
-                    while ($query->have_posts()) {
-                      $query->the_post();
+        while ($query->have_posts()) {
+          $query->the_post();
 
-                      $termsArray = get_the_terms($post->ID, 'tests_category');
+          $termsArray = get_the_terms($post->ID, 'tests_category');
 
-                      $termsSLug = "";
-                      foreach ($termsArray as $term) {
-                        $termsSLug .= $term->slug . ' ';
-                      }
+          $termsSLug = "";
+          foreach ($termsArray as $term) {
+            $termsSLug .= $term->slug . ' ';
+          }
 
-                      ?>
+        ?>
 
-                      <div class="single-content <?php echo  $termsSLug; ?>  grid-item">
-                        <img class="p2" src="<?php the_post_thumbnail_url(); ?>">
-                      </div>
+          <div class="single-content <?php echo  $termsSLug; ?>  grid-item">
+            <img class="p2" src="<?php the_post_thumbnail_url(); ?>">
+          </div>
 
-                <?php  }
-
-                  ?>
-            </div>
+        <?php  }
+        ?>
+      </div>
     </div>
-<?php get_footer(); ?>
-
+  </div>
