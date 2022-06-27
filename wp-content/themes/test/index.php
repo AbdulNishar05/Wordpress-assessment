@@ -8,7 +8,7 @@
       $count = count($terms);
       if ($count > 0) {
         echo "<select id='filter-select'>";
-        echo "<option value='*' data-filter-value='' class='selected'>All items</option>";
+        echo "<option value='*' data-filter-value='' class='selected'>All</option>";
         foreach ($terms as $term) {
           echo "<option value='.{$term->slug}'>" . $term->name . "</option>";
         }
